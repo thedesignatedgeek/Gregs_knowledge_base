@@ -2,7 +2,7 @@
 
 ---
 
-![Main Screen](assets/gkbMainSelection.png width="505")
+![Main Screen](assets/gkbMainSelection.png | width=505)
 
 > ***NOTE   NOTE    NOTE***
 > 
