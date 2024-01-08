@@ -2,7 +2,8 @@
 
 ---
 
-![Main Screen](assets/gkbMainSelection.png | width=505)
+
+<img src="assets/gkbMainSelection.png" width=505>
 
 > ***NOTE   NOTE    NOTE***
 > 
