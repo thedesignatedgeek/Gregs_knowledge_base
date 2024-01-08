@@ -2,7 +2,7 @@
 
 ---
 
-![Main Screen](https://github.com/thedesignatedgeek/Gregs_knowledge_base/assets/gkbMainSelection.png)
+![Main Screen](assets/gkbMainSelection.png)
 
 > ***NOTE   NOTE    NOTE***
 > 
