@@ -2,7 +2,7 @@
 
 ---
 
-![](/home/greg/Gregs_knowledge_base/assets/Greg's_Knowledge_Base_%20Main_Selection.png)
+![Main Screen](https://github.com/thedesignatedgeek/Gregs_knowledge_base/assets/Greg's_Knowledge_Base_%20Main_Selection.png)
 
 > ***NOTE   NOTE    NOTE***
 > 
