@@ -17,6 +17,7 @@
 #    Dec 22, 2023 03:39:28 AM CST  platform: Linux
 #    Dec 23, 2023 07:58:10 AM CST  platform: Linux
 #    Jan 08, 2024 05:55:15 AM CST  platform: Linux
+#    Jan 09, 2024 05:10:09 AM CST  platform: Linux
 
 # ======================================================
 #                   gkb_support.py
@@ -26,20 +27,30 @@
 # Copyright © 2023, 2024 by G.D. Walters
 # This source code is released under the MIT License
 # ======================================================
-#               STILL TO DO - 01/08/2024
+#               STILL TO DO - 01/09/2024
 # ------------------------------------------------------
-# * Update existing record(s) support
+# Need Testing - Update existing record(s) support
 # * Manage FormHider better
 # * Multiple return records better support
 # * Better debug print support
 # * Move ALL SQL queries into functions
-# * Add sphinx stuff to database
+# In Progress - Add sphinx stuff to database
+# * support delete topic
+# * Documentation
+# * After new entry, update number of records, framesql, rerun query
 # ======================================================
 #                    Change Log
 # ------------------------------------------------------
 # 0.1.0 - Initial coding
 # 0.1.1 - 01/08/2024
-#
+#       Added popup2 for Listbox2 (FrameSQL)
+#       Started support for update existing Topics/keywords
+#       Added support for enhanced Listbox
+# 0.1.2 - 01/10/2024
+#       Continued update existing topic/keywords logic
+#       Edit Update and save function for info table completed.
+#       Delete and update keywords completed
+#       Database has 21 records now
 # ======================================================
 import sys
 import os.path
@@ -72,13 +83,13 @@ from tkinter.simpledialog import askfloat, askinteger, askstring
 
 import gkb
 
-_debug = False  # False to eliminate debug printing from callback functions.
+_debug = True  # False to eliminate debug printing from callback functions.
 _debug2 = False
-_debug3 = False
+_debug3 = True
 _debug4 = False
 location = gkb._location
 programName = "Greg's Knowledge Base"
-version = "0.1.1"
+version = "0.1.2"
 
 
 def main(*args):
@@ -101,9 +112,11 @@ def startup():
     global timer_id
     timer_id = root.after(0, on_time_update)
     do_bindings()
+    setup_listbox()
     show_environ_info()
     set_icon()
     setupAbout()
+    shared.editInformation = []
     numrecs = queryCountUnique()
     titl = f"{programName} version {version} - Topics: {numrecs}"
     _top1.title(titl)
@@ -114,11 +127,13 @@ def startup():
     _w1.btnRemove_tooltip.configure(text="Remove Current record (currently DISABLED)")
     _w1.btnSQLDismiss.place_forget()
     _w1.FrameHider.lift()
+    _w1.btnTopicEdit.config(state=DISABLED)
     centre_screen(1010, 754, True)
 
 
 def do_bindings():
-    _w1.Scrolledlistbox1.bind("<<ListboxSelect>>", on_searchListboxSelect)
+    # _w1.Scrolledlistbox1.bind("<<ListboxSelect>>", on_searchListboxSelect)
+    create_listbox_bindings()
     # _w1.TCombobox1.bind("<<ComboboxSelected>>", lambda e: on_ComboSelect(e))
     _w1.TEntry1.bind("<KeyRelease>", lambda e: on_entryKeyPress(e))
     _w1.TEntry4.bind("<KeyRelease>", lambda e: on_queryTestEntryKeyPress(e))
@@ -126,15 +141,44 @@ def do_bindings():
     _w1.Scrolledtext2.bind("<Button-3>", lambda e: _w1.popup1(e, 2))
     _w1.Scrolledtext3.bind("<Button-3>", lambda e: _w1.popup1(e, 3))
     _w1.Scrolledtext4.bind("<Button-3>", lambda e: _w1.popup1(e, 4))
+    # _top1.bind("<Expose>", on_frameExpose("SQL"))
+    # _w1.FrameEditor.bind("<Expose>", on_frameExpose("Edit"))
+    # _w1.FrameAbout.bind("<Expose>", on_frameExpose("About"))
+
+
+def on_frameExpose(which):
+    print(which)
+    if which == "SQL":
+        print("SQL Frame exposed")
+    elif which == "Edit":
+        print("Edit Exposed")
 
 
 def on_searchListboxSelect(e):
+    print("Into on_searchListboxSelect")
     global searchrecs
     indx = _w1.Scrolledlistbox1.curselection()
     itm = _w1.Scrolledlistbox1.get(indx[0])
     # SelectedItem.set(f"Selected Item: {indx[0]} - {itm}")
-    print(f"Selected Item: {indx[0]} - {itm}")
-    print(f"{indx[0]=} - {itm=} - {searchrecs=}")
+    if _debug3:
+        print(f"Selected Item: {indx[0]} - {itm}")
+        print(f"{indx[0]=} - {itm=} - {searchrecs=}")
+    _w1.Scrolledtext2.delete(1.0, END)
+    # clear_textbox()
+    # textbox.insert(1.0, searchrecs[indx[0]][3])
+    _w1.Scrolledtext2.insert(1.0, searchrecs[indx[0]][3])
+    # _w1.FrameMainText.lift()
+
+
+def on_searchListboxSelect2(e):
+    print("Into on_searchListboxSelect2")
+    global searchrecs
+    indx = _w1.Scrolledlistbox2.curselection()
+    itm = _w1.Scrolledlistbox2.get(indx[0])
+    # SelectedItem.set(f"Selected Item: {indx[0]} - {itm}")
+    if _debug3:
+        print(f"Selected Item: {indx[0]} - {itm}")
+        print(f"{indx[0]=} - {itm=} - {searchrecs=}")
     clear_textbox()
     textbox.insert(1.0, searchrecs[indx[0]][3])
     # _w1.FrameMainText.lift()
@@ -232,8 +276,12 @@ def on_keywordSearch(*args):
             print("    another arg:", arg)
         sys.stdout.flush()
     global searchrecs
+
     keywd = _w1.EntryKeyword.get()
     kwretn = queryKeyword_search(keywd)
+
+    _w1.Scrolledtext2.delete(1.0, END)
+
     if len(kwretn) > 0:
         # keywords = get_keywords(keywd)
         # print(keywords)
@@ -243,7 +291,7 @@ def on_keywordSearch(*args):
         resp = cursor.execute(kwdquery)
 
     if len(kwretn) > 1:
-        _w1.FrameSearchResults.lift()
+        # _w1.FrameSearchResults.lift()
         numfound = len(kwretn)
         _w1.SearchResultsTitle.set(f"Search Results - {numfound} items found.")
         print(f"{kwretn}")
@@ -262,6 +310,7 @@ def on_keywordSearch(*args):
 
     elif len(kwretn) == 1:
         clear_textbox
+        _w1.Scrolledtext1.delete(1.0, END)
         textbox.insert(1.0, kwretn[0][3])
         _w1.FrameMainText.lift()
     else:
@@ -311,6 +360,13 @@ def on_btnAdd(*args):
         for arg in args:
             print("    another arg:", arg)
         sys.stdout.flush()
+    _w1.EditorMode.set("New Topic")
+    _w1.FrameEditor.lift()
+    # Clear the two Entry widgets
+    _w1.EntTopic.set("")
+    _w1.EntryKeywords1.set("")
+    # Clear the Scrolledtext widget
+    _w1.Scrolledtext3.delete(1.0, END)
 
 
 def on_btnHelp(*args):
@@ -325,8 +381,7 @@ def on_btnHelp(*args):
     )
     ico = messagebox.INFO
     messagebox.showinfo(titl, msg, parent=_top1, icon=ico)
-
-    _w1.FrameSQL.lift()
+    # _w1.FrameSQL.lift()
 
 
 def on_btnRemove(*args):
@@ -378,40 +433,53 @@ def on_btnEditSave(*args):
             print("    another arg:", arg)
         sys.stdout.flush()
     # Get Topic,Keywords,Code
+    global currentID
     topic = quote(_w1.EntTopic.get())
     keywordraw = _w1.EntryKeywords1.get()
     code = _w1.Scrolledtext3.get(1.0, END)
-    # convert keywords to list
-    # keywordlist = keywordraw.split(",")
-    keywordlist = [s.strip() for s in keywordraw.split(",") if s]
-    print(f"{keywordlist=}")
+    if _w1.EditorMode.get() == "Topic Edit":
+        print("Edit Mode")
+        sql_update_info(currentID, topic, code, keywordraw)
+    else:
+        print("New Topic mode")
+        # topic = quote(_w1.EntTopic.get())
+        # keywordraw = _w1.EntryKeywords1.get()
+        # code = _w1.Scrolledtext3.get(1.0, END)
+        # convert keywords to list
+        # keywordlist = keywordraw.split(",")
+        keywordlist = [s.strip() for s in keywordraw.split(",") if s]
+        print(f"{keywordlist=}")
 
-    # Prep the Code
-    codedata = quote(code)
-    print(f"{code=}")
-    insert1sql = f"INSERT INTO info (topic, code, active) VALUES ({topic},{codedata},1)"
-    print(f"{insert1sql=}")
-    cursor.execute(insert1sql)
-    connection.commit()
-    lastInforowid = cursor.lastrowid
-    for key in keywordlist:
-        keycreatesql = f"INSERT INTO keywordsmain (KeywordText) VALUES ({quote(key)})"
-        print(f"{keycreatesql=}")
-        cursor.execute(keycreatesql)
+        # Prep the Code
+        codedata = quote(code)
+        print(f"{code=}")
+        insert1sql = (
+            f"INSERT INTO info (topic, code, active) VALUES ({topic},{codedata},1)"
+        )
+        print(f"{insert1sql=}")
+        cursor.execute(insert1sql)
         connection.commit()
-        lastKWrowid = cursor.lastrowid
-        linksql = f"INSERT INTO keywords (InfoMain,KeywordsMain) VALUES ({lastInforowid},{lastKWrowid})"
-        print(f"{linksql=}")
-        cursor.execute(linksql)
-        connection.commit()
-    print("DONE!")
-    titl = "Edit Save"
-    msg = "Save completed"
-    ico = messagebox.INFO
-    messagebox.showinfo(titl, msg, parent=_top1, icon=ico)
-    _w1.Scrolledtext3.delete(1.0, END)
-    _w1.EntTopic.set("")
-    _w1.EntryKeywords1.set("")
+        lastInforowid = cursor.lastrowid
+        for key in keywordlist:
+            keycreatesql = (
+                f"INSERT INTO keywordsmain (KeywordText) VALUES ({quote(key)})"
+            )
+            print(f"{keycreatesql=}")
+            cursor.execute(keycreatesql)
+            connection.commit()
+            lastKWrowid = cursor.lastrowid
+            linksql = f"INSERT INTO keywords (InfoMain,KeywordsMain) VALUES ({lastInforowid},{lastKWrowid})"
+            print(f"{linksql=}")
+            cursor.execute(linksql)
+            connection.commit()
+        print("DONE!")
+        titl = "Edit Save"
+        msg = "Save completed"
+        ico = messagebox.INFO
+        messagebox.showinfo(titl, msg, parent=_top1, icon=ico)
+        _w1.Scrolledtext3.delete(1.0, END)
+        _w1.EntTopic.set("")
+        _w1.EntryKeywords1.set("")
 
 
 def on_btnTopicEdit(*args):
@@ -420,12 +488,15 @@ def on_btnTopicEdit(*args):
         for arg in args:
             print("    another arg:", arg)
         sys.stdout.flush()
-    _w1.FrameEditor.lift()
+    _w1.EditorMode.set("Topic Edit")
+
     # Clear the two Entry widgets
     _w1.EntTopic.set("")
+
     _w1.EntryKeywords1.set("")
     # Clear the Scrolledtext widget
     _w1.Scrolledtext3.delete(1.0, END)
+    _w1.FrameEditor.lift()
 
 
 def on_popClear(*args):
@@ -475,7 +546,8 @@ def on_popCopy(*args):
     if args[0] == 4:
         root.clipboard_clear()  # clear clipboard contents
         sel_start, sel_end = _w1.Scrolledtext4.tag_ranges("sel")
-        print(f"{sel_start=} - {sel_end=}")
+        if _debug3:
+            print(f"{sel_start=} - {sel_end=}")
         if sel_start and sel_end:
             root.clipboard_append(_w1.Scrolledtext4.get(sel_start, sel_end))
         else:
@@ -509,7 +581,7 @@ def on_btnSearchDone(*args):
             print("    another arg:", arg)
         sys.stdout.flush()
     # _w1.FrameMainText.lift()
-    _w1.FrameSQL.lift
+    _w1.FrameSQL.lift()
 
 
 def on_btnSQLDismiss(*args):
@@ -520,6 +592,7 @@ def on_btnSQLDismiss(*args):
         sys.stdout.flush()
     _w1.msg2kwds.set("")
     _w1.FrameHider.lift()
+    _w1.FrameSQL.lift()
     # _w1.FrameMainText.lift()
 
 
@@ -545,11 +618,17 @@ def on_btnSQLShow(*args):
 # Listbox callback...
 
 
-def on_SQLlistboxSelect(e):
+def on_SQLlistboxSelect(*args):
+    if _debug3:
+        print("gkb_support.on_SQLlistboxSelect")
+        for arg in args:
+            print("    another arg:", arg)
+        sys.stdout.flush()
     indx = _w1.Scrolledlistbox2.curselection()
     itm = _w1.Scrolledlistbox2.get(indx[0])
     # SelectedItem.set(f"Selected Item: {indx[0]} - {itm}")
-    # print(f"Selected Item: {indx[0]} - {itm}")
+    if _debug3:
+        print(f"Selected Item: {indx[0]} - {itm}")
     shared.sqlQuerySelected = itm
     global topics
     query1 = f"SELECT * FROM info WHERE pkid = {topics[indx[0]][1]}"
@@ -561,17 +640,16 @@ def on_SQLlistboxSelect(e):
     kwds = queryGetKeywords(topics[indx[0]][1])
     tmp = ""
     tmp = ", ".join(kwds)
-    # for kwd in kwds:
-    #    tmp=
+
     _w1.FrameKeywords.lift()
     _w1.msg2kwds.set(tmp)
 
 
 def delete_SQL_ListItems():
-    print("ScrolledListDemo_support.on_btnDeleteListItems")
-    sys.stdout.flush()
+    if _debug:
+        print("gkb_support.delete_SQL_Listitems")
+        sys.stdout.flush()
     _w1.Scrolledlistbox2.delete(0, tk.END)
-    # SelectedItem.set("")
 
 
 def on_btnSQLGo(*args):
@@ -612,8 +690,7 @@ def on_frameEditDismiss(*args):
         for arg in args:
             print("    another arg:", arg)
         sys.stdout.flush()
-    # _w1.FrameMainText.lift()
-    _w1.FrameSQL.lift
+    _w1.FrameSQL.lift()
 
 
 # ===========================================
@@ -687,7 +764,8 @@ FROM
     info
 where info.active=1"""
     reccount = list(cursor.execute(sql))
-    print(reccount[0])
+    if _debug3:
+        print(reccount[0])
     return reccount[0][0]
 
 
@@ -697,6 +775,236 @@ def on_btnMainDismiss(*args):
         for arg in args:
             print("    another arg:", arg)
         sys.stdout.flush()
+    _w1.FrameSQL.lift()
+
+
+# ===================================================
+# Enhanced Listbox support
+# ===================================================
+
+
+def create_listbox_bindings():
+    print("Into create_listbox_bindings")
+    global listbox, listbox2
+    # ===================================================
+    # Listbox is located on the search frame
+    # Listbox2 is located on the SQL frame
+    # ===================================================
+    listbox = _w1.Scrolledlistbox1
+    listbox.bind("<<ListboxSelect>>", on_searchListboxSelect)
+    listbox.bind("<Motion>", on_lbmotion)
+    listbox.bind("<Button-3>", lbBtn3)
+    listbox2 = _w1.Scrolledlistbox2
+    listbox2.bind("<<ListboxSelect>>", on_searchListboxSelect2)
+    listbox2.bind("<Motion>", on_lbmotion)
+    listbox2.bind("<Button-3>", _w1.popup2)
+
+
+def setup_listbox():
+    print("Into setup_listbox")
+    global listbox, listbox2
+    # ===================================================
+    # Listbox is located on the search frame
+    # Listbox2 is located on the SQL frame
+    # ===================================================
+    listbox.configure(background="#a1a1a1")
+    listbox.configure(selectbackground="seagreen2")
+    listbox.configure(selectborderwidth=2)
+    listbox.configure(takefocus=0)
+    listbox2.configure(background="white")
+    listbox2.configure(selectbackground="seagreen2")
+    listbox2.configure(selectborderwidth=2)
+    listbox2.configure(takefocus=0)
+    cntr = 0
+
+    # for version in widgetlist:
+    #     listbox.insert("end", version)
+    #     listbox.itemconfigure(cntr, background="skyblue2")
+    #     cntr += 1
+
+    # versionlist = list(listbox.get(0, END))
+
+
+# Captures mouse motion within the Listbox widget
+def on_lbmotion(event):
+    global mousex, mousey
+    x, y = event.x, event.y
+    mousex = x
+    mousey = y
+
+
+# Along with lbmotion, allows a <Button-3> to "semi-select" an item in the
+# Listbox
+def lbBtn3(*args):
+    global textbox, listbox
+    # ===================================================
+    # Listbox is located on the search frame
+    # Listbox2 is located on the SQL frame
+    # ===================================================
+    print("Into lbBtn3")
+    if _debug:
+        print("Into function something")
+        print(args)
+        for arg in args:
+            print(f"   {arg}")
+    global mousex, mousey
+    X = listbox.winfo_pointerx()
+    y = listbox.winfo_pointery()
+    pos = listbox.nearest(mousey)
+    indx = listbox.curselection()
+    itm = listbox.get(pos)
+    tagname = itm
+    print(f"<Button-3> on {tagname} at position {indx}")
+    if listbox.itemcget(pos, "background") == "antiquewhite3":
+        listbox.itemconfigure(pos, background="skyblue2")
+    else:
+        listbox.itemconfigure(pos, background="antiquewhite3")
+
+
+def lbBtn3_2(*args):
+    global textbox, listbox2
+    # ===================================================
+    # Listbox is located on the search frame
+    # Listbox2 is located on the SQL frame
+    # ===================================================
+    print("Into lbBtn3_2")
+    if _debug:
+        print("Into function something")
+        print(args)
+        for arg in args:
+            print(f"   {arg}")
+    global mousex, mousey
+    X = listbox2.winfo_pointerx()
+    y = listbox2.winfo_pointery()
+    pos = listbox2.nearest(mousey)
+    indx = listbox2.curselection()
+    itm = listbox2.get(pos)
+    tagname = itm
+    print(f"<Button-3> on {tagname} at position {indx}")
+    if listbox2.itemcget(pos, "background") == "antiquewhite3":
+        listbox2.itemconfigure(pos, background="skyblue2")
+    else:
+        listbox2.itemconfigure(pos, background="antiquewhite3")
+
+
+# ===================================================
+# END Enhanced Listbox suport
+# ===================================================
+
+
+def on_pop2CloseMenu(*args):
+    if _debug:
+        print("gkb_support.on_pop2CloseMenu")
+        for arg in args:
+            print("    another arg:", arg)
+        sys.stdout.flush()
+
+
+def on_pop2DeleteTopic(*args):
+    if _debug:
+        print("gkb_support.on_pop2DeleteTopic")
+        for arg in args:
+            print("    another arg:", arg)
+        sys.stdout.flush()
+    global mousex, mousey
+    X = listbox2.winfo_pointerx()
+    y = listbox2.winfo_pointery()
+    pos = listbox2.nearest(mousey)
+    indx = listbox2.curselection()
+    itm = listbox2.get(pos)
+    topicName = itm
+    titl = programName
+    msg = f"You are about to delete {itm}. \nThis can not be undone.  \nAre you sure you want to do this?"
+    ico = messagebox.QUESTION
+    resp = messagebox.askyesno(titl, msg, parent=_top1, icon=ico)
+    print(resp)
+    if resp == True:
+        pass
+    else:
+        pass
+
+
+def on_pop2EditTopic(*args):
+    if _debug:
+        print("gkb_support.on_pop2EditTopic")
+        for arg in args:
+            print("    another arg:", arg)
+        sys.stdout.flush()
+    global mousex, mousey
+    X = listbox2.winfo_pointerx()
+    y = listbox2.winfo_pointery()
+    pos = listbox2.nearest(mousey)
+    indx = listbox2.curselection()
+    itm = listbox2.get(pos)
+    topicName = itm
+    load_Editor(topicName)
+    _w1.FrameEditor.lift()
+    # if listbox2.itemcget(pos, "background") == "antiquewhite3":
+    #     listbox2.itemconfigure(pos, background="skyblue2")
+    # else:
+    #     listbox2.itemconfigure(pos, background="antiquewhite3")
+    # shared.editInformation = ["EditMode", topicName]
+
+
+def load_Editor(topic):
+    if _debug:
+        print("Into load_Editor")
+    print(f"{topic=}")
+    sql = f"SELECT * FROM info WHERE topic = '{topic}'"
+    if _debug:
+        print(sql)
+
+    recs = list(cursor.execute(sql))
+    if _debug:
+        print(f"{recs}")
+    kwds = queryGetKeywords(recs[0][0])
+    if _debug:
+        print(f"{kwds=}")
+    tmp = ""
+    tmp = ", ".join(kwds)
+    # Load the information into the FrameEditor Entry and ScrolledText
+    global currentID
+    currentID = recs[0][0]
+    _w1.EntTopic.set(topic)
+    _w1.EntryKeywords1.set(tmp)
+    _w1.Scrolledtext3.delete(1.0, END)
+    _w1.Scrolledtext3.insert(1.0, recs[0][2])
+    _w1.EditorMode.set("Topic Edit")
+
+
+def sql_update_info(currentID, topic, code, kwds):
+    print(f"{currentID=}")
+    print(f"{topic=}")
+    print(f"{code=}")
+    print(f"{kwds=}")
+    updateinfosql = (
+        f"UPDATE info set topic={topic},code={quote(code)} where pkid={currentID}"
+    )
+    # print(f"{updateinfosql=}")
+    cursor.execute(updateinfosql)
+    connection.commit()
+    # STILL TO DO...
+    deleteKwdSql = f"DELETE FROM keywords WHERE InfoMain = {currentID}"
+    cursor.execute(deleteKwdSql)
+    connection.commit()
+
+    # Delete keywords for the currentID
+    # Remove all records from keywords table where infoMain=currentID
+    keywordlist = [s.strip() for s in kwds.split(",") if s]
+    print(f"{kwds=}")
+    print(f"{keywordlist=}")
+    print("Now to write the keywords")
+    # Insert keywords for the currentID
+    for key in keywordlist:
+        keycreatesql = f"INSERT INTO keywordsmain (KeywordText) VALUES ({quote(key)})"
+        print(f"{keycreatesql=}")
+        cursor.execute(keycreatesql)
+        connection.commit()
+        lastKWrowid = cursor.lastrowid
+        linksql = f"INSERT INTO keywords (InfoMain,KeywordsMain) VALUES ({currentID},{lastKWrowid})"
+        print(f"{linksql=}")
+        cursor.execute(linksql)
+        connection.commit()
 
 
 if __name__ == "__main__":
