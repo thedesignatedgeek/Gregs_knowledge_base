@@ -1,0 +1,267 @@
+
+
+<!doctype html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Greg’s Knowledge Base’s documentation &#8212; Greg&#39;s Knowledge Base 0.1.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
+    <link rel="stylesheet" type="text/css" href="_static/bizstyle.css?v=532c1bf3" />
+    
+    <script src="_static/documentation_options.js?v=92734c54"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="#">Greg&#39;s Knowledge Base 0.1.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Greg’s Knowledge Base’s documentation</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="greg-s-knowledge-base-s-documentation">
+<h1>Greg’s Knowledge Base’s documentation<a class="headerlink" href="#greg-s-knowledge-base-s-documentation" title="Link to this heading">¶</a></h1>
+<a class="reference internal image-reference" href="_images/gkb_Base_Initial.png"><img alt="_images/gkb_Base_Initial.png" src="_images/gkb_Base_Initial.png" style="width: 505.0px; height: 394.0px;" /></a>
+<p>Greg’s Knowledge Base started life <strong>many</strong> years ago as a simple flat text file that I kept on my desktop, holding a few blocks of code snippets that gave me quick access to functions like setting up a TCombobox or Listbox with all the supporting goodies.  Yes, I could remember most of it, but it was so easy just to go to the text file, copy the snippet and paste into my new project, changing just the things that I needed in the new code.</p>
+<p>In late December 2023, I decided that it might be a good idea to create a database that held all of the snippets and create a PAGE GUI front-end for it.  This way, I thought, I would be able to share my snippets with others and share my many years of knowledge with others.  This way, my RAD (Rapid Application Development) skills would make my life easier and I can still share with others.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>I should take this chance to make sure you know that <strong>Greg’s Knowledge Base</strong> is currently under active development and is subject to bugs, things that are somewhat clumsy, subject to change, subject to disappearing in future versions, so please be patient.</p>
+</div>
+<p>Now that I’ve warned you, let’s get on with how to use the program.</p>
+<p>This is ALL based on the <strong>gkb</strong> version 0.1.2 code.  Again, things are subject to change.</p>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">¶</a></h2>
+<p>The only requirements (at this point) is that you have Python installed on your system and that it is version 3.8 or greater.  I’ve currently tested <strong>gkb</strong> on multiple versions of Python from 3.8 to 3.12.0.  I’ve tried not to require any third party libraries.</p>
+</section>
+<section id="installing-gkb">
+<h2>Installing <strong>gkb</strong><a class="headerlink" href="#installing-gkb" title="Link to this heading">¶</a></h2>
+<p>Installing <strong>gkb</strong> is actually very simple.  Just create a folder on your computer and unzip the distribution zip file into that folder.</p>
+</section>
+<section id="starting-gkb">
+<h2>Starting <strong>gkb</strong><a class="headerlink" href="#starting-gkb" title="Link to this heading">¶</a></h2>
+<p>Open a terminal on your machine and type…</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>gkb.py
+</pre></div>
+</div>
+<p>You should see the main form show up somewhere near the centre of your monitor.</p>
+</section>
+<section id="using-gkb">
+<h2>Using <strong>gkb</strong><a class="headerlink" href="#using-gkb" title="Link to this heading">¶</a></h2>
+<p>I’ve tried to create a GUI that is easy to understand and to navigate.  However, this like most things with most of my programs, is subject to change.</p>
+<p>We’ll start with the initial screen that you see when you start up <strong>gkb</strong>.</p>
+<a class="reference internal image-reference" href="_images/gkb_Base_Initial.png"><img alt="_images/gkb_Base_Initial.png" src="_images/gkb_Base_Initial.png" style="width: 505.0px; height: 394.0px;" /></a>
+<p>At the top is the button bar.  Just below that is the keyword search bar.  Below that is the keyword list bar, which in this image is hidden.  Below that is the main “window” where most of the action happens.  Finally at the bottom is a status bar that can show important information as well as the current time.</p>
+<p>Now, let’s break down the some of these sections.</p>
+<section id="the-buttonbar">
+<h3>The ButtonBar<a class="headerlink" href="#the-buttonbar" title="Link to this heading">¶</a></h3>
+<p>The button bar gives you a simple button based menu to do most of the things that you would normally do on a day to day basis within <strong>gkb</strong>.</p>
+<a class="reference internal image-reference" href="_images/buttonbar1.png"><img alt="_images/buttonbar1.png" src="_images/buttonbar1.png" style="width: 704.1999999999999px; height: 35.699999999999996px;" /></a>
+<p>From left to right, the buttons are…</p>
+<ul class="simple">
+<li><p>Logo - The ‘Chubby Owl with Tablet’ <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.  This will eventually be changed from a button to a Label widget.  Currently clicking on it won’t do anything.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Database - This button shows the main screen which gives all the topics in the left pane and when one of the topics is clicked, it will bring up the code in the ScrolledTextbox on the right.</p></li>
+<li><p>Plus - This will jump to the Add new topic screen, where you can enter a topic, the keywords and the code snippet.</p></li>
+<li><p>Minus - This was originally to delete a topic.  It it currently disabled.  However, this will be removed in the next release since that option will be available from the Context menu for the topic list.  In version 0.1.2, there is no delete funciton.</p></li>
+<li><p>Edit pad - This was originally to edit a topic and/or keyword set.  This has been moved to the Context menu for the topic list and will be removed in the next release.</p></li>
+<li><p>Info - This will show the about screen.</p></li>
+<li><p>Question - Will eventually show this documention on demand.  In version 0.1.2, it only shows an information dialog.</p></li>
+<li><p>Power - This is the exit button.</p></li>
+</ul>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>‘Chubby Owl with Tablet’ is courtesy of bocian on <a class="reference external" href="http://openclipart.org/">http://openclipart.org/</a></p>
+</aside>
+</aside>
+</section>
+<section id="the-main-screen-all-topics">
+<h3>The Main Screen - All Topics<a class="headerlink" href="#the-main-screen-all-topics" title="Link to this heading">¶</a></h3>
+<p>There are two main parts to the main screen that will be used the most.  The topic list box on the left of the screen and the code text box on the right.</p>
+<a class="reference internal image-reference" href="_images/gkb_topic_select.png"><img alt="_images/gkb_topic_select.png" src="_images/gkb_topic_select.png" style="width: 487.5px; height: 203.5px;" /></a>
+<p>Every topic that is in the database is in the Selection list box.  Simply left click on the topic of interest and the code/tips will be automatically loaded into the textbox on the right.</p>
+<p>Clicking on any topic in the Selection list box will not only show you the code snippet associated with it, but all of the keywords that have been assigned to that topic.</p>
+<p>To copy any part of the code snippet, simple select the section you wish to copy, right click on it and select Copy from the context menu.</p>
+<a class="reference internal image-reference" href="_images/gkb_all_topics_copy_code.png"><img alt="_images/gkb_all_topics_copy_code.png" src="_images/gkb_all_topics_copy_code.png" style="width: 505.0px; height: 394.0px;" /></a>
+<p>If you find that you want to edit the code snippet, add or delete keywords or rename the topic, you can do that from the topic selection listbox.  Right click on the topic and in the context menu, select Edit.</p>
+<a class="reference internal image-reference" href="_images/gkb_all_topics_rclick_edit.png"><img alt="_images/gkb_all_topics_rclick_edit.png" src="_images/gkb_all_topics_rclick_edit.png" style="width: 505.0px; height: 394.0px;" /></a>
+<p>(See Editing Topics and Snippets below for more information. <a class="reference internal" href="#editingtopics"><span class="std std-ref">Editing Topics and Snippets</span></a></p>
+</section>
+<section id="searching-for-topics">
+<h3>Searching for Topics<a class="headerlink" href="#searching-for-topics" title="Link to this heading">¶</a></h3>
+<p>You can search for a topic by a keyword search.</p>
+<p>Here are the steps…</p>
+<p>In the Keyword search bar, simply enter the keyword you want to search for.  For example, if you want to find anything pertaining to ‘imagemagik’, type ‘imagemagik’ into the entry box and either press the &lt;Enter&gt; key or click on the search button.</p>
+<a class="reference internal image-reference" href="_images/gkb_keyword_search.png"><img alt="_images/gkb_keyword_search.png" src="_images/gkb_keyword_search.png" style="width: 505.0px; height: 394.0px;" /></a>
+<p>There will be times, that you’ve created unique keywords for each topic and the search will only return one record, as shown in the above image.  However, it will be unavoidable that you can always create completely unique keywords.  When more than one record is found for a particular keyword search, a different search screen will be returned.</p>
+<a class="reference internal image-reference" href="_images/gkb_search_multiple_returns.png"><img alt="_images/gkb_search_multiple_returns.png" src="_images/gkb_search_multiple_returns.png" style="width: 505.0px; height: 394.0px;" /></a>
+<p>Each returned record from the search is shown in the listbox on the left.  Select any record by clicking on it in the list box to see the code in the right hand box.</p>
+<p><strong>gkb</strong> version 0.1.2 has a small error that will sometimes return multiple records when only one should be found.  This will hopefully fixed in the release.</p>
+</section>
+<section id="adding-your-own-topics-and-snippets">
+<h3>Adding your own Topics and Snippets<a class="headerlink" href="#adding-your-own-topics-and-snippets" title="Link to this heading">¶</a></h3>
+<p>I made sure that anyone who uses <strong>gkb</strong> can easily add their own snippets that they often use to the database.  Here’s how…</p>
+<p>First, click on the “plus” sign in the buttonbar menu.  This will switch to the New Topic Entry screen.</p>
+<p>Add your topic name into the Topic Entry, then create a list of keywords, each keyword separated by commas, into the Keywords Entry.</p>
+<p>Next, enter your code snippet into the Textbox.  Make any additional comments or tips you feel might be helpful.  Remember, many times, your entire entry will be copied, so make sure you use the “#” comment marker.</p>
+<a class="reference internal image-reference" href="_images/gkb_New_Topic.png"><img alt="_images/gkb_New_Topic.png" src="_images/gkb_New_Topic.png" style="width: 505.0px; height: 394.0px;" /></a>
+<p>Once you’ve gotten everything complete, click the “Save” button.  If everything saved correctly, you will see a dialog that says “Save Complete” with an “OK” button.  Click the “OK” button.  If you have other snippets to add, simply repeat the process.</p>
+<p><em>still to be completed</em></p>
+</section>
+<section id="editing-topics-and-snippets">
+<span id="editingtopics"></span><h3>Editing Topics and Snippets<a class="headerlink" href="#editing-topics-and-snippets" title="Link to this heading">¶</a></h3>
+<p>You might want to add some helpful information to an existing snippet, change the Topic text or change some or all of the keyword set.  This can easily be done using the ‘Edit Topic’ feature.</p>
+<p>As I stated above, you can get to the ‘Edit Topic’ screen by right clicking on a topic in the Topic Selection listbox in the ‘All Topics’ screen (Click on the Database button in the Buttonbar if you aren’t there) and selecting “Edit Topic” from the context menu.</p>
+<a class="reference internal image-reference" href="_images/gkb_all_topics_rclick_edit.png"><img alt="_images/gkb_all_topics_rclick_edit.png" src="_images/gkb_all_topics_rclick_edit.png" style="width: 505.0px; height: 394.0px;" /></a>
+<p>When you do that, you will be taken to the Topic Edit screen.  You might say, ‘Hey, that looks like the New Topic screen!’.  You are correct, I re-use the screen, but in the Topic Edit mode you any changes you make to the topic name, keywords and/or the snipped will update the database with the new information.  The old information will be over-written.</p>
+<a class="reference internal image-reference" href="_images/gkb_Edit_Topic.png"><img alt="_images/gkb_Edit_Topic.png" src="_images/gkb_Edit_Topic.png" style="width: 505.0px; height: 394.0px;" /></a>
+<p>Make any changes you need, the click the “Save” button, just like you did in the Adding your own Topic section.</p>
+<p>Click the Dismiss button to get back to the All Topic Screen.</p>
+<p><em>still to be completed</em></p>
+</section>
+<section id="deleting-topics">
+<h3>Deleting topics<a class="headerlink" href="#deleting-topics" title="Link to this heading">¶</a></h3>
+<p>This is not supported in version 0.1.2.  It will be working in version 0.1.3.</p>
+</section>
+</section>
+<section id="diving-deep-into-gkb">
+<h2>Diving Deep into <strong>gkb</strong><a class="headerlink" href="#diving-deep-into-gkb" title="Link to this heading">¶</a></h2>
+<p>In this section, I will attempt to explain some of the things that is “normally” hidden within the code.  If you don’t care about how it works, then you can feel free to skip this section.  If, on the other hand, you want to understand things like using databases, database schemas, SQL statements, and so on, continue on, happy pilgrim!</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>In the first few releases of <strong>gkb</strong>, I am including all three PAGE files, the <em>.tcl</em> file that PAGE uses to generate the Python files and the Python <em>.py</em> files which are used to run <strong>gkb</strong> itself.  Normally, I would include the <em>.tcl</em> file to allow a user to see how I built the GUI.  Due to an issue in PAGE 8.0 with <strong>popup menus</strong>, I’m going to remove it from the distribution for a while, since if someone saves the file by accident and generates the python files from within PAGE, it will break all of the context menus.  Don is planning on rebuilding the menu system in PAGE from the bottom up for PAGE 8.1, so hopefully the issues will be taken care of and I can once again include the <em>.tcl</em> file.</p>
+</div>
+<section id="the-database">
+<h3>The Database<a class="headerlink" href="#the-database" title="Link to this heading">¶</a></h3>
+<p>The database is a simple SqlLite database.  I use this because it is simple, portable and fairly bulletproof.</p>
+<p>Here is what the schema looks like…</p>
+<a class="reference internal image-reference" href="_images/schema1.png"><img alt="_images/schema1.png" src="_images/schema1.png" style="width: 416.25px; height: 120.75px;" /></a>
+<p>You can see that there are three tables for the database.  The first is named ‘info’.  This table holds the topic name, the code snippet, an active boolean flag that makes a record as deleted or active and finally but most importantly the primary key id (pkid).</p>
+<p>The second table is named ‘keywords’ and acts as a link between the <em>info</em> table and the next table which is named ‘keywordsmain’.  The <em>keywords</em> table contains only integer entries.  We’ll examine this in a little bit.</p>
+<p>Now we look at the third table, the ‘keywordsmain’ table.  This table contains a primary key id and the text of each keyword that might be used to describe the topic.</p>
+<p><em>still to be completed</em></p>
+</section>
+<section id="about-page">
+<h3>About PAGE<a class="headerlink" href="#about-page" title="Link to this heading">¶</a></h3>
+<p>PAGE is a drag-and-drop GUI generator for Python and Tkinter which
+generates Python modules that display a relatively simple GUI
+constructed from Tk and Ttk widget sets using the Place Geometry
+Manager. PAGE supports the construction of multiple Toplevel GUI’s.</p>
+<p>PAGE is a cross-platform tool running on any OS that has a current
+version of Python installed. PAGE output requires only Python Tkinter
+and runs on Linux, Unix, Windows, OS X, and even Raspberry Pi.</p>
+<p>Version 8 is a major release which incorporates initial support of Ttk
+themes.</p>
+<p>PAGE can be found at <a class="reference external" href="https://sourceforge.net/projects/page/">https://sourceforge.net/projects/page/</a></p>
+</section>
+<section id="about-the-author">
+<h3>About the author<a class="headerlink" href="#about-the-author" title="Link to this heading">¶</a></h3>
+<p>I am Greg Walters (the Greg in Greg’s Knowledge Base), a Python developer for over 20 years.  I am semi-retired and currently live in Central Texas, USA.  I’ve been programming for over 50 years.  I’ve written 2 books, co-authored one book and currently, am in the process of writing two more.  My home page is <a class="reference external" href="http://thedesignatedgeek.xyz">http://thedesignatedgeek.xyz</a> .</p>
+<p>I am very proud to be part of the <strong>PAGE</strong> development team.</p>
+<p>Some of the tools that I used to create <strong>gkb</strong> include:</p>
+<ul class="simple">
+<li><p>Python 3.11.4</p></li>
+<li><p>PAGE 8.0 - A GUI designer for Python using Tk and the ttk widget sets (see above) - <a class="reference external" href="https://sourceforge.net/projects/page/">https://sourceforge.net/projects/page/</a></p></li>
+<li><p>Sphinx - Sphinx is the tool that I used to make this documentation.  <a class="reference external" href="https://www.sphinx-doc.org/en/master/">https://www.sphinx-doc.org/en/master/</a></p></li>
+<li><p>Formiko - Formiko is reStructuredText and MarkDown editor and live previewer.  <a class="reference external" href="https://github.com/ondratu/formiko">https://github.com/ondratu/formiko</a></p></li>
+<li><p>SQLite - The database behind <strong>gkb</strong> - <a class="reference external" href="https://www.sqlite.org/index.html">https://www.sqlite.org/index.html</a></p></li>
+<li><p>SQLeo - a visual query tool for SQLite and other Database engines - <a class="reference external" href="https://sqleo.sourceforge.io/">https://sqleo.sourceforge.io/</a></p></li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="#">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Greg’s Knowledge Base’s documentation</a><ul>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#installing-gkb">Installing <strong>gkb</strong></a></li>
+<li><a class="reference internal" href="#starting-gkb">Starting <strong>gkb</strong></a></li>
+<li><a class="reference internal" href="#using-gkb">Using <strong>gkb</strong></a><ul>
+<li><a class="reference internal" href="#the-buttonbar">The ButtonBar</a></li>
+<li><a class="reference internal" href="#the-main-screen-all-topics">The Main Screen - All Topics</a></li>
+<li><a class="reference internal" href="#searching-for-topics">Searching for Topics</a></li>
+<li><a class="reference internal" href="#adding-your-own-topics-and-snippets">Adding your own Topics and Snippets</a></li>
+<li><a class="reference internal" href="#editing-topics-and-snippets">Editing Topics and Snippets</a></li>
+<li><a class="reference internal" href="#deleting-topics">Deleting topics</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#diving-deep-into-gkb">Diving Deep into <strong>gkb</strong></a><ul>
+<li><a class="reference internal" href="#the-database">The Database</a></li>
+<li><a class="reference internal" href="#about-page">About PAGE</a></li>
+<li><a class="reference internal" href="#about-the-author">About the author</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="#">Greg&#39;s Knowledge Base 0.1.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Greg’s Knowledge Base’s documentation</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Gregory Walters.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    </div>
+  </body>
+</html>

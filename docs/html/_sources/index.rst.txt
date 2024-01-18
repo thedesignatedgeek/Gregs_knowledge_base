@@ -1,0 +1,345 @@
+.. Greg's Knowledge Base documentation master file, created by
+   sphinx-quickstart on Wed Jan 10 13:09:04 2024.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+
+Greg's Knowledge Base's documentation
+=================================================
+
+.. image:: /images/gkb_Base_Initial.png 
+   :scale: 50%
+
+Greg's Knowledge Base started life **many** years ago as a simple flat text file that I kept on my desktop, holding a few blocks of code snippets that gave me quick access to functions like setting up a TCombobox or Listbox with all the supporting goodies.  Yes, I could remember most of it, but it was so easy just to go to the text file, copy the snippet and paste into my new project, changing just the things that I needed in the new code.
+
+In late December 2023, I decided that it might be a good idea to create a database that held all of the snippets and create a PAGE GUI front-end for it.  This way, I thought, I would be able to share my snippets with others and share my many years of knowledge with others.  This way, my RAD (Rapid Application Development) skills would make my life easier and I can still share with others.
+
+
+.. note::
+
+   I should take this chance to make sure you know that **Greg's Knowledge Base** is currently under active development and is subject to bugs, things that are somewhat clumsy, subject to change, subject to disappearing in future versions, so please be patient.  
+
+
+Now that I've warned you, let's get on with how to use the program.  
+
+This is ALL based on the **gkb** version 0.1.2 code.  Again, things are subject to change.
+
+
+.. Need to update
+
+
+
+Requirements
+---------------------
+
+The only requirements (at this point) is that you have Python installed on your system and that it is version 3.8 or greater.  I've currently tested **gkb** on multiple versions of Python from 3.8 to 3.12.0.  I've tried not to require any third party libraries.
+
+
+
+Installing **gkb**
+-----------------------
+
+Installing **gkb** is actually very simple.  Just create a folder on your computer and unzip the distribution zip file into that folder.
+
+
+.. Need to update
+
+
+
+
+Starting **gkb**
+-----------------------
+
+Open a terminal on your machine and type...
+
+
+.. code-block:: console
+
+   $ python gkb.py
+
+
+
+You should see the main form show up somewhere near the centre of your monitor.
+
+
+
+
+Using **gkb**
+----------------------------
+
+I've tried to create a GUI that is easy to understand and to navigate.  However, this like most things with most of my programs, is subject to change.
+
+We'll start with the initial screen that you see when you start up **gkb**.
+
+
+.. image:: /images/gkb_Base_Initial.png 
+   :scale: 50%
+
+
+At the top is the button bar.  Just below that is the keyword search bar.  Below that is the keyword list bar, which in this image is hidden.  Below that is the main "window" where most of the action happens.  Finally at the bottom is a status bar that can show important information as well as the current time.
+
+Now, let's break down the some of these sections.
+
+
+-------------------------
+The ButtonBar
+-------------------------
+
+The button bar gives you a simple button based menu to do most of the things that you would normally do on a day to day basis within **gkb**.
+
+.. image:: /images/buttonbar1.png 
+   :scale: 70%
+
+
+From left to right, the buttons are...
+
+* Logo - The 'Chubby Owl with Tablet' [#]_.  This will eventually be changed from a button to a Label widget.  Currently clicking on it won't do anything.
+
+.. Need to update
+
+
+* Database - This button shows the main screen which gives all the topics in the left pane and when one of the topics is clicked, it will bring up the code in the ScrolledTextbox on the right.
+* Plus - This will jump to the Add new topic screen, where you can enter a topic, the keywords and the code snippet. 
+* Minus - This was originally to delete a topic.  It it currently disabled.  However, this will be removed in the next release since that option will be available from the Context menu for the topic list.  In version 0.1.2, there is no delete funciton.
+* Edit pad - This was originally to edit a topic and/or keyword set.  This has been moved to the Context menu for the topic list and will be removed in the next release.
+* Info - This will show the about screen.
+* Question - Will eventually show this documention on demand.  In version 0.1.2, it only shows an information dialog.
+* Power - This is the exit button.
+
+.. [#] 'Chubby Owl with Tablet' is courtesy of bocian on http://openclipart.org/
+
+
+-------------------------------------
+The Main Screen - All Topics
+-------------------------------------
+
+There are two main parts to the main screen that will be used the most.  The topic list box on the left of the screen and the code text box on the right.
+
+
+.. image:: /images/gkb_topic_select.png
+   :scale: 50%
+
+
+
+
+Every topic that is in the database is in the Selection list box.  Simply left click on the topic of interest and the code/tips will be automatically loaded into the textbox on the right.
+
+Clicking on any topic in the Selection list box will not only show you the code snippet associated with it, but all of the keywords that have been assigned to that topic.
+
+To copy any part of the code snippet, simple select the section you wish to copy, right click on it and select Copy from the context menu.
+
+
+
+.. image:: /images/gkb_all_topics_copy_code.png
+   :scale: 50%
+
+
+
+
+If you find that you want to edit the code snippet, add or delete keywords or rename the topic, you can do that from the topic selection listbox.  Right click on the topic and in the context menu, select Edit. 
+
+
+.. image:: /images/gkb_all_topics_rclick_edit.png
+   :scale: 50%
+
+
+
+(See Editing Topics and Snippets below for more information. :ref:`EditingTopics`
+
+
+-----------------------------
+Searching for Topics
+-----------------------------
+
+You can search for a topic by a keyword search.
+
+Here are the steps...
+
+In the Keyword search bar, simply enter the keyword you want to search for.  For example, if you want to find anything pertaining to 'imagemagik', type 'imagemagik' into the entry box and either press the <Enter> key or click on the search button.
+
+
+.. image:: /images/gkb_keyword_search.png
+   :scale: 50%
+
+
+There will be times, that you've created unique keywords for each topic and the search will only return one record, as shown in the above image.  However, it will be unavoidable that you can always create completely unique keywords.  When more than one record is found for a particular keyword search, a different search screen will be returned.
+
+
+
+.. image:: /images/gkb_search_multiple_returns.png
+   :scale: 50%
+
+
+.. Need to update
+
+
+Each returned record from the search is shown in the listbox on the left.  Select any record by clicking on it in the list box to see the code in the right hand box.
+
+**gkb** version 0.1.2 has a small error that will sometimes return multiple records when only one should be found.  This will hopefully fixed in the release.
+
+
+.. Need to update
+
+
+
+-----------------------------------------
+Adding your own Topics and Snippets
+-----------------------------------------
+
+I made sure that anyone who uses **gkb** can easily add their own snippets that they often use to the database.  Here's how...
+
+First, click on the "plus" sign in the buttonbar menu.  This will switch to the New Topic Entry screen.
+
+Add your topic name into the Topic Entry, then create a list of keywords, each keyword separated by commas, into the Keywords Entry.
+
+Next, enter your code snippet into the Textbox.  Make any additional comments or tips you feel might be helpful.  Remember, many times, your entire entry will be copied, so make sure you use the "#" comment marker.
+
+
+.. image:: /images/gkb_New_Topic.png
+   :scale: 50%
+
+Once you've gotten everything complete, click the "Save" button.  If everything saved correctly, you will see a dialog that says "Save Complete" with an "OK" button.  Click the "OK" button.  If you have other snippets to add, simply repeat the process.
+
+
+.. Need to update
+
+
+*still to be completed*
+
+
+
+.. _EditingTopics:
+
+-----------------------------------------
+Editing Topics and Snippets
+-----------------------------------------
+
+You might want to add some helpful information to an existing snippet, change the Topic text or change some or all of the keyword set.  This can easily be done using the 'Edit Topic' feature.
+
+As I stated above, you can get to the 'Edit Topic' screen by right clicking on a topic in the Topic Selection listbox in the 'All Topics' screen (Click on the Database button in the Buttonbar if you aren't there) and selecting "Edit Topic" from the context menu.
+
+
+.. image:: /images/gkb_all_topics_rclick_edit.png
+   :scale: 50%
+
+
+When you do that, you will be taken to the Topic Edit screen.  You might say, 'Hey, that looks like the New Topic screen!'.  You are correct, I re-use the screen, but in the Topic Edit mode you any changes you make to the topic name, keywords and/or the snipped will update the database with the new information.  The old information will be over-written.
+
+.. image:: /images/gkb_Edit_Topic.png
+   :scale: 50%
+
+Make any changes you need, the click the "Save" button, just like you did in the Adding your own Topic section.
+
+Click the Dismiss button to get back to the All Topic Screen.
+
+
+
+.. Need to update
+
+
+*still to be completed*
+
+
+-------------------------------------
+Deleting topics
+-------------------------------------
+
+This is not supported in version 0.1.2.  It will be working in version 0.1.3.
+
+.. Need to update
+
+
+
+
+
+Diving Deep into **gkb**
+------------------------------------
+
+In this section, I will attempt to explain some of the things that is "normally" hidden within the code.  If you don't care about how it works, then you can feel free to skip this section.  If, on the other hand, you want to understand things like using databases, database schemas, SQL statements, and so on, continue on, happy pilgrim!
+
+
+.. Need to update
+
+
+.. warning::
+   In the first few releases of **gkb**, I am including all three PAGE files, the *.tcl* file that PAGE uses to generate the Python files and the Python *.py* files which are used to run **gkb** itself.  Normally, I would include the *.tcl* file to allow a user to see how I built the GUI.  Due to an issue in PAGE 8.0 with **popup menus**, I'm going to remove it from the distribution for a while, since if someone saves the file by accident and generates the python files from within PAGE, it will break all of the context menus.  Don is planning on rebuilding the menu system in PAGE from the bottom up for PAGE 8.1, so hopefully the issues will be taken care of and I can once again include the *.tcl* file.
+
+
+--------------------------------
+The Database
+--------------------------------
+
+The database is a simple SqlLite database.  I use this because it is simple, portable and fairly bulletproof.
+
+Here is what the schema looks like...
+
+
+.. image:: /images/schema1.png 
+   :scale: 75%
+
+
+You can see that there are three tables for the database.  The first is named 'info'.  This table holds the topic name, the code snippet, an active boolean flag that makes a record as deleted or active and finally but most importantly the primary key id (pkid).
+
+The second table is named 'keywords' and acts as a link between the *info* table and the next table which is named 'keywordsmain'.  The *keywords* table contains only integer entries.  We'll examine this in a little bit.
+
+Now we look at the third table, the 'keywordsmain' table.  This table contains a primary key id and the text of each keyword that might be used to describe the topic.
+
+
+.. Need to update
+
+
+*still to be completed*
+
+
+
+
+
+.. Need to update
+
+
+-------------------------------------
+About PAGE
+-------------------------------------
+
+PAGE is a drag-and-drop GUI generator for Python and Tkinter which
+generates Python modules that display a relatively simple GUI
+constructed from Tk and Ttk widget sets using the Place Geometry
+Manager. PAGE supports the construction of multiple Toplevel GUI's.
+
+PAGE is a cross-platform tool running on any OS that has a current
+version of Python installed. PAGE output requires only Python Tkinter
+and runs on Linux, Unix, Windows, OS X, and even Raspberry Pi.
+
+Version 8 is a major release which incorporates initial support of Ttk
+themes.
+
+PAGE can be found at https://sourceforge.net/projects/page/ 
+
+
+-----------------------------
+About the author
+-----------------------------
+
+I am Greg Walters (the Greg in Greg's Knowledge Base), a Python developer for over 20 years.  I am semi-retired and currently live in Central Texas, USA.  I've been programming for over 50 years.  I've written 2 books, co-authored one book and currently, am in the process of writing two more.  My home page is http://thedesignatedgeek.xyz .
+
+I am very proud to be part of the **PAGE** development team.
+
+Some of the tools that I used to create **gkb** include:
+
+* Python 3.11.4
+* PAGE 8.0 - A GUI designer for Python using Tk and the ttk widget sets (see above) - https://sourceforge.net/projects/page/ 
+* Sphinx - Sphinx is the tool that I used to make this documentation.  https://www.sphinx-doc.org/en/master/
+* Formiko - Formiko is reStructuredText and MarkDown editor and live previewer.  https://github.com/ondratu/formiko
+* SQLite - The database behind **gkb** - https://www.sqlite.org/index.html
+* SQLeo - a visual query tool for SQLite and other Database engines - https://sqleo.sourceforge.io/
+
+
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+
+
+
