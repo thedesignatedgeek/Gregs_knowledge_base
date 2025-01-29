@@ -1,0 +1,2 @@
+Tkinter - Remove titlebar from Toplevel form
+   root.overrideredirect(True)  # Hide the 'decorations'

@@ -64,24 +64,12 @@ import sqlite3
 import datetime
 import shared
 from dbutils import quote
-import pprint
 import webbrowser
 
 # ===============================================
 import tkinter as tk
-import tkinter.ttk as ttk
 from tkinter.constants import *
-from tkinter import font
 import tkinter.messagebox as messagebox
-from tkinter import simpledialog
-from tkinter import colorchooser
-from tkinter.filedialog import (
-    askdirectory,
-    askopenfilename,
-    asksaveasfile,
-    asksaveasfilename,
-)
-from tkinter.simpledialog import askfloat, askinteger, askstring
 
 # ===============================================
 
@@ -1156,7 +1144,7 @@ def queryGetAllFromInfo(indx):
 def queryGetAllActiveTopics():
     if _debug4:
         print("into queryGetAllActiveTopics")
-    query = f"""
+    query = """
 SELECT
 	info.topic,
 	info.pkid,

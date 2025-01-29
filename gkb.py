@@ -5,7 +5,6 @@
 #  in conjunction with Tcl version 8.6
 #    Jan 12, 2024 03:53:13 AM CST  platform: Linux
 
-import sys
 import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter.constants import *
@@ -644,7 +643,7 @@ Copyright © 2023,2024 by Gregory Walters"""
         self.Popupmenu2.post(event.x_root, event.y_root)
 
 
-from time import time, localtime, strftime
+from time import time
 
 
 class ToolTip(tk.Toplevel):
